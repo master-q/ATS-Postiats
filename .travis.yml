@@ -8,6 +8,7 @@ before_install:
   - export PATSHOME=${TRAVIS_BUILD_DIR}
   - export PATSHOMERELOC=${TRAVIS_BUILD_DIR}
   - export PATH=${PATH}:${PATSHOME}/bin
+  - export NUMCPU=`grep -c "^processor" < /proc/cpuinfo`
   - ${TRAVIS_BUILD_DIR}/travis-ci/setup.sh 0.2.11
 script:
   - cd ${TRAVIS_BUILD_DIR}
@@ -23,7 +24,7 @@ script:
   - make -C ${PATSHOME}/doc/DISTRIB cleanall
   - make -C ${PATSHOME}/doc/DISTRIB atspacktarzvcf
   # Regress test
-  - make -f Makefile_devl all
+  - make -f Makefile_devl -j ${NUMCPU} all
   - make -C ${PATSHOME}/doc regress > regress_doc.log 2>&1
   - tail -100 regress_doc.log
 after_script:
