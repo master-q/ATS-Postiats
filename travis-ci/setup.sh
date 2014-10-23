@@ -20,6 +20,7 @@ http://downloads.sourceforge.net/project/ats-lang
 #
 ######
 
+NUMCPU=`grep -c "^processor" < /proc/cpuinfo`
 WGETQ="wget -q"
 TARZXF="tar zxf"
 
@@ -32,7 +33,7 @@ ${TARZXF} ${ATSPACKTGZ}
 #
 ######
 #
-cd ${ATSPACK}; ./configure; make all
+cd ${ATSPACK}; ./configure; make -j ${NUMCPU} all
 #
 ######
 
