@@ -3,6 +3,11 @@ before_install:
   - cd ${HOME}
   - sudo apt-get -qq -y install libgc-dev
   - sudo apt-get -qq -y install libgmp3-dev
+  # For utils/atspkgreloc
+  - wget https://launchpad.net/ubuntu/+archive/primary/+files/libjson0-dev_0.9-1ubuntu1.1_amd64.deb
+  - wget https://launchpad.net/ubuntu/+archive/primary/+files/libjson0_0.9-1ubuntu1.1_amd64.deb
+  - sudo dpkg -i libjson*.deb
+  - sudo apt-get -qq -y install
   - export ATSHOME=${HOME}/ats-lang-anairiats-0.2.11
   - export ATSHOMERELOC=ATS-0.2.11
   - export PATSHOME=${TRAVIS_BUILD_DIR}
