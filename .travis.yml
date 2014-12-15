@@ -29,5 +29,8 @@ script:
   # Build utils
   - make -C libatsynmark
   - make -C utils/atsynmark
+  - make -C utils/atspkgreloc
+  - make -C utils/atstags
+  - make -C utils/atslex
 after_script:
   - date
