@@ -10,7 +10,7 @@ environment:
         ATS1LANGURL: http://sourceforge.net/projects/ats-lang
         ATS1PACKURL: http://sourceforge.net/projects/ats-lang/files/ats-lang/anairiats-0.2.11/ats-lang-anairiats-0.2.11-fin.tgz
         ATSHOME: /tmp/ats-lang-anairiats-0.2.11
-        ATSHOMERELOC: ATS-0.2.11
+#        ATSHOMERELOC: ATS-0.2.11
         PATSHOME: /tmp/ATS-Postiats
         PATSHOMERELOC: /tmp/ATS-Postiats-contrib
 
@@ -35,7 +35,6 @@ install:
     - '%CYG_ROOT%/bin/bash -lc "cygcheck -dc cygwin"'
     - 'echo Setup Cygwin dependencies is finished!'
     - 'echo Build ATS1(with GC support)'
-#    - '%CYG_ROOT%/bin/bash -lc "wget -q -P /tmp %ATS1PACKURL%w"'
     - 'appveyor DownloadFile %ATS1PACKURL% -FileName %CYG_ROOT%/%ATS1PACKTGZ%'
     - '%CYG_ROOT%/bin/bash -lc "tar -C /tmp -zxf /%ATS1PACKTGZ%"'
     - '%CYG_ROOT%/bin/bash -lc "cd %ATSHOME%; exec 0</dev/null; ./configure&&make all"'
@@ -44,8 +43,8 @@ install:
 #    - '%CYG_ROOT%/bin/bash -lc "cd /tmp && git clone -q https://github.com/githwxi/ATS-Postiats.git"'
     - '%CYG_ROOT%/bin/bash -lc "cd /tmp && git clone -q https://github.com/master-q/ATS-Postiats.git"'
     - '%CYG_ROOT%/bin/bash -lc "cd $PATSHOME && git checkout -qf %APPVEYOR_REPO_COMMIT%"'
-    - 'echo Download ATS2-contrib...'
-    - '%CYG_ROOT%/bin/bash -lc "cd /tmp && git clone -q https://github.com/githwxi/ATS-Postiats-contrib.git"'
+#    - 'echo Download ATS2-contrib...'
+#    - '%CYG_ROOT%/bin/bash -lc "cd /tmp && git clone -q https://github.com/githwxi/ATS-Postiats-contrib.git"'
 
 build_script:
     - cmd: 'echo Cygwin root is: %CYG_ROOT%'
