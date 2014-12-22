@@ -10,9 +10,9 @@ environment:
         ATS1LANGURL: http://sourceforge.net/projects/ats-lang
         ATS1PACKURL: http://sourceforge.net/projects/ats-lang/files/ats-lang/anairiats-0.2.11/ats-lang-anairiats-0.2.11-fin.tgz
         ATSHOME: /tmp/ats-lang-anairiats-0.2.11
-#        ATSHOMERELOC: ATS-0.2.11
+        ATSHOMERELOC: ATS-0.2.11
         PATSHOME: /tmp/ATS-Postiats
-        PATSHOMERELOC: /tmp/ATS-Postiats-contrib
+#        PATSHOMERELOC: /tmp/ATS-Postiats-contrib
 
     matrix:
         -   CYG_ARCH: x86
