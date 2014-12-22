@@ -42,7 +42,7 @@ install:
     - 'echo Download ATS2... (needed to use symlink.)'
 #    - '%CYG_ROOT%/bin/bash -lc "cd /tmp && git clone -q https://github.com/githwxi/ATS-Postiats.git"'
     - '%CYG_ROOT%/bin/bash -lc "cd /tmp && git clone -q https://github.com/master-q/ATS-Postiats.git"'
-    - '%CYG_ROOT%/bin/bash -lc "cd $PATSHOME && git checkout %APPVEYOR_REPO_COMMIT%"'
+    - '%CYG_ROOT%/bin/bash -lc "cd $PATSHOME && git checkout -qf %APPVEYOR_REPO_COMMIT%"'
     - 'echo Download ATS2-contrib...'
     - '%CYG_ROOT%/bin/bash -lc "cd /tmp && git clone -q https://github.com/githwxi/ATS-Postiats-contrib.git"'
 
