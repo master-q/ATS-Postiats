@@ -174,6 +174,15 @@ cleanall:: ; $(RMF) bug-2015-01-03_dats.c
 
 ######
 
+all:: \
+bug-2015-01-09
+bug-2015-01-09: ; \
+(if $(PATSOPT) -o bug-2015-01-09_dats.c -d bug-2015-01-09.dats; then false; \
+ else true; fi)
+cleanall:: ; $(RMF) bug-2015-01-09_dats.c
+
+######
+
 RMF=rm -f
 
 ######
