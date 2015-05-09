@@ -97,7 +97,7 @@ comarglst_parse
       val+ ~list_vt_nil () = !p
       val arg = comarg_parse (argv.[i])
       val lst0 = list_vt_cons (arg, list_vt_nil ())
-      val+ list_vt_cons (_, !lst) = lst0
+      val+ list_vt_cons (_, lst) = lst0
       val (pf | ()) = loop (view@ (!lst) | argv, i+1, lst)
     in
       fold@ lst0; !p := lst0; (pf0 | ())

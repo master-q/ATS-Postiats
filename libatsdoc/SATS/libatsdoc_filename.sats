@@ -77,7 +77,7 @@ fun filename_get_full (fil: filename): $SYM.symbol
 
 fun filename_append (
   dir: string, bas: string
-) :<> strptr1 = "atsopt_filename_append"
+) :<> Strptr1 = "atsopt_filename_append"
 
 (* ****** ****** *)
 
