@@ -239,7 +239,7 @@ in
   if filp > null then let
     prval Some_v (pffil) = pfopt
     val filr = __cast (pffil | filp) where {
-      extern castfn __cast {m:fm} (pffil: FILE_v (m, l) | p: ptr l): FILEref
+      extern castfn __cast {m:fm} (pffil: FILE_v (l, m) | p: ptr l): FILEref
     } // end of [val]
     val cs = char_list_vt_make_file (filr)
     val _err = fclose_err (filr)

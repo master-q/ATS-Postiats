@@ -38,6 +38,8 @@ staload _(*anon*) = "prelude/DATS/reference.dats"
 
 (* ****** ****** *)
 
+staload
+UN = "prelude/SATS/unsafe.sats"
 staload "libc/SATS/stdio.sats"
 
 (* ****** ****** *)
@@ -80,8 +82,7 @@ comarg_parse (s) = let
       COMARGkey (n, s) (* loop exists *)
     end // end of [if]
   // end of [loop]
-  val s = string1_of_string s
-  val n = string_length s; val n = int1_of_size1 n
+  val n = string_length s; val n = $UN.cast{int}(n)
 in
   loop (s, n, 0)
 end // end of [comarg_parse]
@@ -102,8 +103,8 @@ comarglst_parse
     in
       fold@ lst0; !p := lst0; (pf0 | ())
     end else (pf0 | ())
-  var lst0 = list_vt_nil {comarg} ()
-  val (pf | ()) = loop (view@ lst0 | argv, 0, &lst0) // tail-call
+  val lst0 = list_vt_nil {comarg} ()
+  val (pf | ()) = loop (view@ lst0 | argv, 0, lst0) // tail-call
   prval () = view@ lst0 := pf
 in
   lst0
@@ -222,13 +223,13 @@ end // end of [local]
 
 fun outcode_set_filename
   (path: string): void = let
-  val (pfopt | filp) = fopen_err (path, file_mode_w)
+  val (pfopt | filp) = fopen (path, file_mode_w)
 in
 //
-if filp > null then let
+if filp > the_null_ptr then let
   prval Some_v (pffil) = pfopt
   val filp = __cast (pffil | filp) where {
-    extern castfn __cast {m:fm} {l:addr} (pf: FILE (m) @ l | p: ptr l): FILEref 
+    extern castfn __cast {m:fm} {l:addr} (pf: FILE_v (l, m) | p: ptr l): FILEref 
   } // end of [val]
 in
   outcode_set (OUTCHANptr (filp))
@@ -240,13 +241,13 @@ end // end of [outcode_set_filename]
 
 fun outdata_set_filename
   (path: string): void = let
-  val (pfopt | filp) = fopen_err (path, file_mode_w)
+  val (pfopt | filp) = fopen (path, file_mode_w)
 in
 //
-if filp > null then let
+if filp > the_null_ptr then let
   prval Some_v (pffil) = pfopt
   val filp = __cast (pffil | filp) where {
-    extern castfn __cast {m:fm} {l:addr} (pf: FILE (m) @ l | p: ptr l): FILEref 
+    extern castfn __cast {m:fm} {l:addr} (pf: FILE_v (l, m) | p: ptr l): FILEref 
   } // end of [val]
 in
   outdata_set (OUTCHANptr (filp))
@@ -271,17 +272,17 @@ end // end of [local]
 
 fn atsdoc_usage (): void = {
   val cmd = argv0_get () // [argv0] is already set
-  val () = printf ("usage: %s <command> ... <command>\n\n", @(cmd))
-  val () = printf ("where each <command> is of one of the following forms:\n\n", @())
-  val () = printf ("  -i filenames (for taking input from <filenames>)\n", @())
-  val () = printf ("  --input filenames (for taking input from <filenames>)\n", @())
-  val () = printf ("  -oc filename (outputing texting code to <filename>)\n", @())
-  val () = printf ("  --outcode filename (outputing texting code to <filename>)\n", @())
-  val () = printf ("  -od filename (outputing texting data to <filename>)\n", @())
-  val () = printf ("  --outdata filename (outputing texting data to <filename>)\n", @())
-  val () = printf ("  -h (for printing out the usage)\n", @())
-  val () = printf ("  --help (for printing out the usage)\n", @())
-  val () = printf ("\n", @())
+  val () = print ("usage: %s <command> ... <command>\n\n", cmd)
+  val () = print ("where each <command> is of one of the following forms:\n\n")
+  val () = print ("  -i filenames (for taking input from <filenames>)\n")
+  val () = print ("  --input filenames (for taking input from <filenames>)\n")
+  val () = print ("  -oc filename (outputing texting code to <filename>)\n")
+  val () = print ("  --outcode filename (outputing texting code to <filename>)\n")
+  val () = print ("  -od filename (outputing texting data to <filename>)\n")
+  val () = print ("  --outdata filename (outputing texting data to <filename>)\n")
+  val () = print ("  -h (for printing out the usage)\n")
+  val () = print ("  --help (for printing out the usage)\n")
+  val () = print ("\n")
 } // end of [atsdoc_usage]
 
 (* ****** ****** *)
