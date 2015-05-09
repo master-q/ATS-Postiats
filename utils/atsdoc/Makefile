@@ -34,17 +34,17 @@
 #
 ######
 
-ATSCC=$(ATSHOME)/bin/atscc
-ATSOPT=$(ATSHOME)/bin/atsopt
+PATSCC=$(PATSHOME)/bin/patscc
+PATSOPT=$(PATSHOME)/bin/patsopt
 
 ######
 
 ATSGCFLAG=
 ATSGCFLAG=-D_ATS_GCATS
 
-ATSCCFLAGS=-g
-ATSCCFLAGS=-g -O
-ATSCCFLAGS=-g -O2
+PATSCCFLAGS=-g
+PATSCCFLAGS=-g -O
+PATSCCFLAGS=-g -O2
 
 ######
 
@@ -68,15 +68,15 @@ all:: atsdoc clean
 ######
 
 atsdoc: atsdoc_main_dats.o $(OBJECTS)
-	$(ATSCC) $(ATSGCFLAG) $(ATSCCFLAGS) -o atsdoc atsdoc_main_dats.o $(OBJECTS) -latsdoc
+	$(PATSCC) $(ATSGCFLAG) $(PATSCCFLAGS) -o atsdoc atsdoc_main_dats.o $(OBJECTS) -latsdoc
 
 ######
 
 %_sats.o: %.sats
-	$(ATSCC) $(ATSCCFLAGS) -c $<
+	$(PATSCC) $(PATSCCFLAGS) -c $<
 
 %_dats.o: %.dats
-	$(ATSCC) $(ATSCCFLAGS) -c $<
+	$(PATSCC) $(PATSCCFLAGS) -c $<
 
 ######
 
