@@ -287,7 +287,7 @@ fn atsdoc_usage (): void = {
 
 (* ****** ****** *)
 
-fn*
+fun
 process_cmdline
   {i:nat} .<i,0>. (
   state: &cmdstate, arglst: comarglst (i)
