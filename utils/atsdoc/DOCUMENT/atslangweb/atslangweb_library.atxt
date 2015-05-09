@@ -1,0 +1,230 @@
+%{
+//
+dynload "libatsdoc/dynloadall.dats"
+//
+staload STDIO = "libc/SATS/stdio.sats"
+//
+(* ****** ****** *)
+//
+#define ISTEMP 0
+//
+#include "atslangwebatxt.dats"
+//
+val _ATSLANGWEBLIBRARY: atext =
+  strcst"<strong>Libraries</strong>"
+val () = theAtextMap_insert_str ("ATSLANGWEBLIBRARY", _ATSLANGWEBLIBRARY)
+//
+(* ****** ****** *)
+//
+#include "atslangweb_layout.dats"
+//
+(* ****** ****** *)
+
+val theCSSfilr =
+  $STDIO.fopen_ref_exn ("styles/atslangweb_library.css", file_mode_w)
+val () = fprintf (theCSSfilr,
+  "@import url(%s/styles/atslangweb_temp.css);\n\n", @(ATSLANGWEBROOT)
+) // end of [val]
+val () = fprintf (theCSSfilr,
+  "@import url(%s/styles/atslangweb_jsddm_menu.css);\n\n", @(ATSLANGWEBROOT)
+) // end of [val]
+
+fun addcssrule
+  (rule: string): atext = let
+  val () = fprint_string (theCSSfilr, rule) in atext_nil ()
+end // end of [addcssrule]
+
+(* ****** ****** *)
+//
+%}
+
+<!-- ****** ****** -->
+
+%{
+fun myliblink (
+  path: string, fname: string
+) : atext = let
+  val res = sprintf (
+    "<a href=\"%s/%s.html\">ATSLIB/%s/%s</a>", @(path, fname, path, fname)
+  ) // end of [val]
+in
+  atext_strptr (res)
+end // end of [myliblink]
+%}
+
+<!-- ****** ****** -->
+
+#strsub[theStyleSheetLink]("\
+#ATSLANGWEBROOTget()/styles/atslangweb_library.css\
+")
+
+#ignoretxt(
+#strsub[thePageHeaderSeparator]('\
+<div class="Page-mysitelinks">
+#mysitelinks2("LIBRARY")
+</div>
+'))
+
+#addcssrule("\
+\#thePageBody-prop {
+padding-left: 10px ;
+padding-right: 10px ;
+}
+")
+#strsub[thePageBody]('\
+<div id="thePageBody-prop">
+
+<!-- ****** ****** -->
+
+<h1>Libraries</h1>
+
+#para('\
+ATS is feature-rich. It can accommodate low-level C-style
+imperative programming as well as high-level ML-style functional
+programming. As different programming styles often require different kinds
+of library support, it is probably unsurprising that there are several
+varieties of libraries in ATS available to meet certain distinct needs of
+programmers (such as runtime with or without GC).\
+')
+
+#para('\
+In the following presentation, let us use ATSLIB to refer to the root
+directory where ATS libraries are stored, which usually coincides with the
+ATS home directory.\
+')
+
+#menu('\
+#lisub("\
+#ulink("\#ATSLIB_prelude", "ATSLIB/prelude"):
+contains essential library packages for supporting basic programming
+with ATS.\
+")
+
+#lisub("\
+#ulink("\#ATSLIB_libc", "ATSLIB/libc"):
+contains library packages that are mostly like API in ATS for their counterparts
+in C.\
+")
+
+#lisub("\
+#ulink("\#ATSLIB_libats", "ATSLIB/libats"):
+contains library packages implemented in ATS that often make advanced use
+of the type system of ATS.\
+")
+
+#lisub("\
+#ulink("\#ATSLIB_libats_ML", "ATSLIB/libats/ML"):
+contains library packages for supporting ML-like functional style of programming with
+ATS.\
+")
+
+#lisub("\
+#ulink("\#ATSLIB_contrib", "ATSLIB/contrib"):
+contains mostly uncategorized collection of library packages contributed
+for purpose of supporting general programming with ATS. This is also a
+place for testing library packages before they are moved into one of the
+above libraries.
+")
+
+')#comment("menu")
+
+#HR(2)
+
+<h2>#uid("ATSLIB_prelude", "ATSLIB/prelude")</h2>
+
+<h4>Primary</h4>
+#menu('\
+#comment("Primary")
+#litxt(#myliblink("prelude", "arith_prf"))
+#litxt(#myliblink("prelude", "bool"))
+#litxt(#myliblink("prelude", "char"))
+#litxt(#myliblink("prelude", "filebas"))
+#litxt(#myliblink("prelude", "float"))
+#litxt(#myliblink("prelude", "integer"))
+#litxt(#myliblink("prelude", "intrange"))
+#litxt(#myliblink("prelude", "pointer"))
+#litxt(#myliblink("prelude", "reference"))
+#litxt(#myliblink("prelude", "string"))
+#litxt(#myliblink("prelude", "strptr"))
+#litxt(#myliblink("prelude", "unsafe"))
+')#comment("menu")
+
+<h4>Secondary</h4>
+#menu('\
+#comment("Secondary")
+#litxt(#myliblink("prelude", "list"))
+#litxt(#myliblink("prelude", "list_vt"))
+#litxt(#myliblink("prelude", "option"))
+#litxt(#myliblink("prelude", "option_vt"))
+#litxt(#myliblink("prelude", "array"))
+#litxt(#myliblink("prelude", "array_prf"))
+#litxt(#myliblink("prelude", "arrayptr"))
+#litxt(#myliblink("prelude", "arrayref"))
+#litxt(#myliblink("prelude", "matrix"))
+#litxt(#myliblink("prelude", "matrixptr"))
+#litxt(#myliblink("prelude", "matrixref"))
+
+#litxt(#myliblink("prelude", "iterator"))
+#litxt(#myliblink("prelude", "fcontainer"))
+
+')#comment("menu")
+
+#HR(1)
+
+<h2>#uid("ATSLIB_libc", "ATSLIB/libc")</h2>
+
+#menu('\
+#litxt(#myliblink("libc", "stdio"))
+#litxt(#myliblink("libc", "stdlib"))
+#litxt(#myliblink("libc", "unistd"))
+')#comment("menu")
+
+#HR(1)
+
+<h2>#uid("ATSLIB_libats", "ATSLIB/libats")</h2>
+
+#menu('\
+')#comment("menu")
+
+#HR(1)
+
+<h2>#uid("ATSLIB_libats_ML", "ATSLIB/libats/ML")</h2>
+
+#menu('\
+#litxt(#myliblink("libats/ML", "list0"))
+#litxt(#myliblink("libats/ML", "option0"))
+#litxt(#myliblink("libats/ML", "array0"))
+#litxt(#myliblink("libats/ML", "string"))
+')#comment("menu")
+
+#HR(1)
+
+<h2>#uid("ATSLIB_contrib", "ATSLIB/contrib")</h2>
+
+#menu('\
+')#comment("menu")
+
+<!-- ****** ****** -->
+
+</div>#comment("div/id=thePageBody-prop")
+')#comment("strsub")
+
+<!-- ****** ****** -->
+
+#ignoretxt(
+#strsub[thePageFooterSeparator]('\
+<div class="Page-mysitelinks">
+#mysitelinks3("LIBRARY")
+</div>
+'))
+
+%{
+implement
+main () = {
+//
+val () =  $STDIO.fclose_exn (theCSSfilr)
+//
+val () = fprint_filsub (stdout_ref, "atslangweb_temp.html")
+//
+} // end of [main]
+%}\
