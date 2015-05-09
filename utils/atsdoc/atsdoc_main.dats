@@ -82,7 +82,8 @@ comarg_parse (s) = let
       COMARGkey (n, s) (* loop exists *)
     end // end of [if]
   // end of [loop]
-  val n = string_length s; val n = $UN.cast{int}(n)
+  val s = $UN.cast(s)
+  val n = string_length s; val n = $UN.cast(n)
 in
   loop (s, n, 0)
 end // end of [comarg_parse]
