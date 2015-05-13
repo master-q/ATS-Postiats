@@ -67,7 +67,7 @@ extern
 fun comarg_parse (s: string):<> comarg
 extern
 fun comarglst_parse {n:nat}
-  (argc: int n, argv: &(@[string][n])):<> list_vt (comarg, n)
+  (argc: int n, argv: &(@[string][n])): list_vt (comarg, n)
 // end of [comarglst_parse]
 
 (* ****** ****** *)
@@ -91,24 +91,15 @@ end // end of [comarg_parse]
 implement
 comarglst_parse
   {n} (argc, argv) = let
-  viewtypedef arglst (n: int) = list_vt (comarg, n)
-  fun loop {i:nat | i <= n} {l:addr} .<n-i>.
-    (pf0: arglst 0 @ l | argv: &(@[string][n]), i: int i, p: ptr l)
-    :<cloref> (arglst (n-i) @ l | void) =
-    if i < argc then let
-      val+ ~list_vt_nil () = !p
-      val arg = comarg_parse (argv.[i])
-      val lst0 = list_vt_cons (arg, list_vt_nil ())
-      val+ list_vt_cons (_, lst) = lst0
-      val (pf | ()) = loop (view@ (!lst) | argv, i+1, lst)
-    in
-      fold@ lst0; !p := lst0; (pf0 | ())
-    end else (pf0 | ())
-  val lst0 = list_vt_nil {comarg} ()
-  val (pf | ()) = loop (view@ lst0 | argv, 0, lst0) // tail-call
-  prval () = view@ lst0 := pf
+//
+val p = $UN.cast{ptr}(argv)
+//
+implement
+list_tabulate$fopr<comarg> (i) =
+  comarg_parse($UN.ptr0_get_at<string> (p, i))
+//
 in
-  lst0
+  list_tabulate<comarg> (argc)
 end // end of [comarglst_parse]
 
 (* ****** ****** *)
